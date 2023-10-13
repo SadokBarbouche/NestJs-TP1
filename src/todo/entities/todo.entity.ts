@@ -1,4 +1,11 @@
-import { IsNotEmpty, MinLength, MaxLength, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  MinLength,
+  MaxLength,
+  IsEnum,
+  Validate,
+  IsString,
+} from 'class-validator';
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
 import { ErrorMessages } from '../error-messages/error-messages';
 import { StatusEnum } from '../status.enum';
@@ -24,6 +31,9 @@ export class TodoEntity extends TimestampEntities {
   @Column({
     type: 'enum',
     enum: StatusEnum,
+    default: StatusEnum.PENDING,
   })
+  @IsNotEmpty()
+  @IsEnum(StatusEnum, { message: 'Status invalide' })
   status: StatusEnum;
 }

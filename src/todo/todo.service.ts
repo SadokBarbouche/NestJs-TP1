@@ -44,12 +44,12 @@ export class TodoService {
       throw new NotFoundException(`Le todo avec l'ID ${id} n'existe pas.`);
     }
 
-    await this.todoRepository.softDelete({ id }); // soft delete deletedAt
+    await this.todoRepository.softDelete({ id }); // soft delete => deletedAt
   }
 
   async softRemoveTodo(id: number): Promise<void> {
-    const todoToSoftDelete = await this.todoRepository.findOneBy({ id });
-    if (!todoToSoftDelete) {
+    const todoToSoftTodo = await this.todoRepository.findOneBy({ id });
+    if (!todoToSoftTodo) {
       throw new NotFoundException(`Le todo avec l'ID ${id} n'existe pas.`);
     }
 
@@ -60,7 +60,7 @@ export class TodoService {
     await this.todoRepository.restore(id);
   }
 
-  async getTodoCountByStatus(): Promise<{ [status: string]: number }> {
+  async getTodoCountByStatus() {
     const statusCounts = {};
     for (const status of Object.values(StatusEnum)) {
       const count = await this.todoRepository.count({ where: { status } });
