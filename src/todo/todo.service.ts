@@ -18,11 +18,7 @@ export class TodoService {
   ) {}
 
   async addTodo(todo: AddTodoDto): Promise<TodoEntity> {
-    const status = todo.status;
-    const test = Object.values(StatusEnum).includes(status);
-    console.log(test);
-    if (test) return await this.todoRepository.save(todo);
-    else throw new BadRequestException();
+    return await this.todoRepository.save(todo);
   }
 
   async updateTodo(id: number, todo: UpdateTodoDto): Promise<TodoEntity> {
@@ -115,7 +111,7 @@ export class TodoService {
       .select(['todo.name', 'todo.description', 'todo.status']);
 
     if (name) {
-      queryBuilder.andWhere('todo.name LIKE :nom', { nom: `%${name}%` });
+      queryBuilder.where('todo.name LIKE :nom', { nom: `%${name}%` });
     }
 
     if (description) {

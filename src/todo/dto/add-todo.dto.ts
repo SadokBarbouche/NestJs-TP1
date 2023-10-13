@@ -26,6 +26,5 @@ export class AddTodoDto {
 
   @IsOptional()
   @IsEnum(StatusEnum, { message: 'Status invalide' })
-  @IsIn(Object.values(StatusEnum), { message: 'Statut invalide' })
   status: StatusEnum;
 }
