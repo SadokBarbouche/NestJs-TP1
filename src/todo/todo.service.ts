@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { TodoEntity } from './entities/todo.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,7 +18,11 @@ export class TodoService {
   ) {}
 
   async addTodo(todo: AddTodoDto): Promise<TodoEntity> {
-    return await this.todoRepository.save(todo);
+    const status = todo.status;
+    const test = Object.values(StatusEnum).includes(status);
+    console.log(test);
+    if (test) return await this.todoRepository.save(todo);
+    else throw new BadRequestException();
   }
 
   async updateTodo(id: number, todo: UpdateTodoDto): Promise<TodoEntity> {
