@@ -5,6 +5,9 @@ import {
   IsEnum,
   Validate,
   IsString,
+  IsNotEmptyObject,
+  isInstance,
+  IsIn,
 } from 'class-validator';
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
 import { ErrorMessages } from '../error-messages/error-messages';
@@ -34,6 +37,7 @@ export class TodoEntity extends TimestampEntities {
     default: StatusEnum.PENDING,
   })
   @IsNotEmpty()
+  @IsIn(Object.values(StatusEnum))
   @IsEnum(StatusEnum, { message: 'Status invalide' })
   status: StatusEnum;
 }
