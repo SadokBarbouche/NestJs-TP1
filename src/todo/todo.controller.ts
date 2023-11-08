@@ -8,17 +8,22 @@ import {
   ParseIntPipe,
   Delete,
   Query,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { TodoEntity } from './entities/todo.entity';
 import { AddTodoDto } from './dto/add-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { AuthMiddleware } from '../middlewares/auth.middleware';
 
 @Controller('todo')
+@UseGuards(AuthMiddleware)
 export class TodoController {
   constructor(private todoService: TodoService) {}
   @Post()
-  async addTodo(@Body() todo: AddTodoDto): Promise<TodoEntity> {
+  async addTodo(@Body() todo: AddTodoDto, @Req() request): Promise<TodoEntity> {
+    const userId = request['userId'];
     return await this.todoService.addTodo(todo);
   }
 

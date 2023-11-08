@@ -36,8 +36,5 @@ export class TodoEntity extends TimestampEntities {
     enum: StatusEnum,
     default: StatusEnum.PENDING,
   })
-  @IsNotEmpty()
-  @IsIn(Object.values(StatusEnum))
-  @IsEnum(StatusEnum, { message: 'Status invalide' })
   status: StatusEnum;
 }
