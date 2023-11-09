@@ -11,7 +11,7 @@ export class CreateCvDto {
   @IsNumber()
   @IsNotEmpty()
   age: number;
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   cin: number;
   @IsNotEmpty()

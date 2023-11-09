@@ -35,6 +35,6 @@ dotenv.config();
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('user');
+    consumer.apply(AuthMiddleware).forRoutes('cv');
   }
 }

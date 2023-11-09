@@ -28,10 +28,10 @@ export class CvEntity extends TimestampEntities {
   @Column()
   path: string;
 
-  @ManyToMany(() => SkillEntity, (skill) => skill.cvs)
+  @ManyToMany(() => SkillEntity, (skill) => skill.cvs,{eager:true})
   @JoinTable()
   skills: SkillEntity[];
 
-  @ManyToOne((type) => UserEntity, (user) => user.cvs)
+  @ManyToOne((type) => UserEntity, (user) => user.cvs,{eager:true})
   user: UserEntity;
 }
