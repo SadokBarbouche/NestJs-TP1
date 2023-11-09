@@ -10,11 +10,11 @@ export class UserEntity extends TimestampEntities {
   })
   username: string;
   @Column({
-    length: 50,
+    length: 60,
   })
   email: string;
   @Column({
-    length: 50,
+    length: 60,
   })
   password: string;
 

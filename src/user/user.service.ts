@@ -41,29 +41,34 @@ export class UserService {
   }
   async login(creditentials: LoginCredsDto) {
     const { username, password } = creditentials;
-    let name = username;
+    const name = username;
     const user = await this.userRepository
       .createQueryBuilder('user')
       .where('user.username = :name', { name })
       .getOne();
     if (!user) {
-      throw new NotFoundException('username not found');
+      throw new NotFoundException('username introuvable');
     }
-    const hashedPassword = await bcrypt.hash(password, user.salt);
-    if (hashedPassword === user.password) {
-      const payload = {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        password: user.password,
-      };
+    const payload = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+    };
 
-      const jwt = this.jwtService.sign(payload);
+    const testPassword = await bcrypt.compare(password, user.password);
+    // console.log(hashedPassword.length);
+    // console.log(hashedPassword, user.password);
+    if (testPassword) {
+      const jwt = this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET,
+      });
+
       return {
         access_token: jwt,
       };
     } else {
-      throw new NotFoundException('Wrong password');
+      throw new NotFoundException('Password INCORRECT');
     }
   }
 }
